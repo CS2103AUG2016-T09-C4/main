@@ -9,6 +9,7 @@ import seedu.unburden.model.tag.UniqueTagList;
 public interface ReadOnlyTask {
 
     Name getName();
+    TaskDescription getTaskDescription();
     Date getDate();
     Time getStartTime();
     Time getEndTime();
@@ -33,6 +34,26 @@ public interface ReadOnlyTask {
      */
     default String getAsText() {
         final StringBuilder builder = new StringBuilder();
+        /*
+        builder.append(getName());
+        if(getTaskDescription().fullTaskD != "NIL"){
+        	builder.append(getTaskDescription());
+        }
+        if(getDate().fullDate != "NIL"){
+        	builder.append("   Deadline : ");        
+            builder.append(getDate());
+        }
+        if(getStartTime().fullTime != "NIL" && getEndTime().fullTime != "NIL"){
+        	builder.append("   Start Time - End time : ");  
+	        builder.append(getStartTime() + " - ");
+	        builder.append(getEndTime() + "   ");
+        }
+        getTags().forEach(builder::append);
+        
+        return builder.toString();
+    }
+    */
+        
         if(getDate().fullDate == "NIL" && getStartTime().fullTime == "NIL" && getEndTime().fullTime == "NIL"){
         	builder.append(getName());
         	getTags().forEach(builder::append);
@@ -47,6 +68,7 @@ public interface ReadOnlyTask {
         
         else {       
 	        builder.append(getName());
+	        builder.append(getTaskDescription());
 	        builder.append("   Deadline : ");        
 	        builder.append(getDate());
 	        builder.append("   Start Time - End time : ");  
@@ -57,7 +79,7 @@ public interface ReadOnlyTask {
         
         return builder.toString();
     }
-
+    
     /**
      * Returns a string representation of this Task's tags
      */

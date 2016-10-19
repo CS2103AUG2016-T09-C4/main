@@ -326,10 +326,10 @@ public class LogicManagerTest {
     @Test
     public void execute_find_onlyMatchesFullWordsInNames() throws Exception {
         TestDataHelper helper = new TestDataHelper();
-        Task pTarget1 = helper.generateTaskWithName("bla bla KEY bla", "11-10-2016", "1500" , "1800");
-        Task pTarget2 = helper.generateTaskWithName("bla KEY bla bceofeia", "11-10-2016", "1500" , "1800");
-        Task p1 = helper.generateTaskWithName("KE Y", "11-10-2016", "1500" , "1800");
-        Task p2 = helper.generateTaskWithName("KEYKEYKEY sduauo", "11-10-2016", "1500" , "1800");
+        Task pTarget1 = helper.generateTaskWithName("bla bla KEY bla","add task descripton ","11-10-2016", "1500" , "1800");
+        Task pTarget2 = helper.generateTaskWithName("bla KEY bla bceofeia","add task descripton ", "11-10-2016", "1500" , "1800");
+        Task p1 = helper.generateTaskWithName("KE Y","add task descripton ", "11-10-2016", "1500" , "1800");
+        Task p2 = helper.generateTaskWithName("KEYKEYKEY sduauo","add task descripton ", "11-10-2016", "1500" , "1800");
 
         List<Task> fourTasks = helper.generateTaskList(p1, pTarget1, p2, pTarget2);
         ListOfTask expectedAB = helper.generateListOfTask(fourTasks);
@@ -345,10 +345,10 @@ public class LogicManagerTest {
     @Test
     public void execute_find_isNotCaseSensitive() throws Exception {
         TestDataHelper helper = new TestDataHelper();
-        Task p1 = helper.generateTaskWithName("bla bla KEY bla", "11-10-2016", "1500" , "1800");
-        Task p2 = helper.generateTaskWithName("bla KEY bla bceofeia", "06-12-2016", "1800" , "1900");
-        Task p3 = helper.generateTaskWithName("key key", "03-10-2013", "1300" , "1400");
-        Task p4 = helper.generateTaskWithName("KEy sduauo", "10-09-2016", "1200" , "1800");
+        Task p1 = helper.generateTaskWithName("bla bla KEY bla","add task descripton ", "11-10-2016", "1500" , "1800");
+        Task p2 = helper.generateTaskWithName("bla KEY bla bceofeia","add task descripton ", "06-12-2016", "1800" , "1900");
+        Task p3 = helper.generateTaskWithName("key key","add task descripton ", "03-10-2013", "1300" , "1400");
+        Task p4 = helper.generateTaskWithName("KEy sduauo","add task descripton ", "10-09-2016", "1200" , "1800");
 
         List<Task> fourTasks = helper.generateTaskList(p3, p1, p4, p2);
         ListOfTask expectedAB = helper.generateListOfTask(fourTasks);
@@ -364,10 +364,10 @@ public class LogicManagerTest {
     @Test
     public void execute_find_matchesIfAnyKeywordPresent() throws Exception {
         TestDataHelper helper = new TestDataHelper();
-        Task pTarget1 = helper.generateTaskWithName("bla bla KEY bla", "11-10-2016", "1500" , "1800");
-        Task pTarget2 = helper.generateTaskWithName("bla rAnDoM bla bceofeia", "22-09-2016", "1100" , "1800");
-        Task pTarget3 = helper.generateTaskWithName("key key", "06-10-2011", "1100" , "1200");
-        Task p1 = helper.generateTaskWithName("sduauo", "02-03-2016", "1300" , "1400");
+        Task pTarget1 = helper.generateTaskWithName("bla bla KEY bla","add task descripton ", "11-10-2016", "1500" , "1800");
+        Task pTarget2 = helper.generateTaskWithName("bla rAnDoM bla bceofeia","add task descripton ", "22-09-2016", "1100" , "1800");
+        Task pTarget3 = helper.generateTaskWithName("key key","add task descripton ", "06-10-2011", "1100" , "1200");
+        Task p1 = helper.generateTaskWithName("sduauo","add task descripton ", "02-03-2016", "1300" , "1400");
 
         List<Task> fourTasks = helper.generateTaskList(pTarget1, p1, pTarget2, pTarget3);
         ListOfTask expectedAB = helper.generateListOfTask(fourTasks);
@@ -407,6 +407,7 @@ public class LogicManagerTest {
         Task generateTask(int seed) throws Exception {
             return new Task(
                     new Name("Task " + seed),
+                    new TaskDescription("Task Description " + seed),
                     new Date("Date " + seed),
                     new Time("startTime " + seed),
                     new Time("endTime " + seed),
@@ -421,6 +422,7 @@ public class LogicManagerTest {
             cmd.append("add ");
 
             cmd.append(p.getName().toString());
+            cmd.append(" q/").append(p.getTaskDescription().toString());
             cmd.append(" d/").append(p.getDate().toString());
             cmd.append(" s/").append(p.getStartTime().toString());
             cmd.append(" e/").append(p.getEndTime().toString());
@@ -502,9 +504,10 @@ public class LogicManagerTest {
         /**
          * Generates a Task object with given name. Other fields will have some dummy values.
          */
-        Task generateTaskWithName(String name, String date, String startTime, String endTime) throws Exception {
+        Task generateTaskWithName(String name, String taskD,String date, String startTime, String endTime) throws Exception {
             return new Task(
                     new Name(name),
+                    new TaskDescription(taskD),
                     new Date(date),
                     new Time(startTime),
                     new Time(endTime),

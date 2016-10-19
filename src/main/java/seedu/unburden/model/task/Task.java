@@ -13,6 +13,7 @@ import seedu.unburden.model.tag.UniqueTagList;
 public class Task implements ReadOnlyTask {
 
     private Name name;
+    private TaskDescription taskD;
     private Date date;
     private Time startTime;
     private Time endTime;
@@ -21,6 +22,17 @@ public class Task implements ReadOnlyTask {
     /**
      * Every field must be present and not null.
      */
+    public Task(Name name, TaskDescription taskD,Date date, Time startTime, Time endTime, UniqueTagList tags) {
+        assert !CollectionUtil.isAnyNull(name, tags);
+        this.name = name;
+        this.taskD = taskD;
+        this.date = date;
+        this.startTime = startTime;
+        this.endTime = endTime;
+        this.tags = new UniqueTagList(tags); // protect internal tags from changes in the arg list
+    }
+    
+    
     public Task(Name name,Date date, Time startTime, Time endTime, UniqueTagList tags) {
         assert !CollectionUtil.isAnyNull(name, tags);
         this.name = name;
@@ -59,6 +71,11 @@ public class Task implements ReadOnlyTask {
     public Name getName() {
         return name;
     }
+	
+	@Override
+    public TaskDescription getTaskDescription() {
+        return taskD;
+    }
     
     @Override
     public Date getDate() {
@@ -91,6 +108,10 @@ public class Task implements ReadOnlyTask {
         this.name = name;
     }
     
+    public void setTaskDescription(TaskDescription taskD) {
+        this.taskD = taskD;
+    }
+    
     public void setDate(Date date) {
         this.date = date;
     }
@@ -113,7 +134,7 @@ public class Task implements ReadOnlyTask {
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name,date,startTime,endTime, tags);
+        return Objects.hash(name,taskD,date,startTime,endTime, tags);
     }
 
     @Override
