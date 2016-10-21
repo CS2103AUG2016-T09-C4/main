@@ -6,4 +6,3 @@
             fx:controller="seedu.unburden.ui.CommandBox" stylesheets="@DarkTheme.css">
    <TextField fx:id="commandTextField" onAction="#handleCommandInputChanged" promptText="Enter command here..."/>
 </AnchorPane>
-
