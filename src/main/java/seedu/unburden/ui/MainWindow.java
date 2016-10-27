@@ -194,9 +194,14 @@ public class MainWindow extends UiPart {
     public void releaseResources() {
         browserPanel.freeResources();
     }
-}   
+   
     
-   /* @FXML
+
+ /**
+ * The basic functions for the summary panel
+ * @@author A0147986H
+ */
+    @FXML
     public void handleListMonday() {
      
     }
@@ -204,7 +209,7 @@ public class MainWindow extends UiPart {
     @FXML
     public void handleListTuesday() {
        
-
+    }
     @FXML
     public void handleListWednesday() {
        
@@ -223,10 +228,12 @@ public class MainWindow extends UiPart {
     @FXML
     public void handleListSaturday() {
      
-
+    }
+    
     @FXML
     public void handleListSunday() {
-       
+    
     }
 }
-*/
+ 
+
