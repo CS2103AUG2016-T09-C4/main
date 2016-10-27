@@ -194,4 +194,39 @@ public class MainWindow extends UiPart {
     public void releaseResources() {
         browserPanel.freeResources();
     }
+}   
+    
+   /* @FXML
+    public void handleListMonday() {
+     
+    }
+
+    @FXML
+    public void handleListTuesday() {
+       
+
+    @FXML
+    public void handleListWednesday() {
+       
+    }
+
+    @FXML
+    public void handleListThursday() {
+       
+    }
+
+    @FXML
+    public void handleListFriday() {
+        
+    }
+
+    @FXML
+    public void handleListSaturday() {
+     
+
+    @FXML
+    public void handleListSunday() {
+       
+    }
 }
+*/
