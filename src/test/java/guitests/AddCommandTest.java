@@ -2,7 +2,6 @@ package guitests;
 
 import guitests.guihandles.TaskCardHandle;
 import org.junit.Test;
-
 import seedu.unburden.commons.core.Messages;
 import seedu.unburden.logic.commands.AddCommand;
 import seedu.unburden.testutil.TestTask;
@@ -10,22 +9,28 @@ import seedu.unburden.testutil.TestUtil;
 
 import static org.junit.Assert.assertTrue;
 
+/**
+ * The Summary panel
+ * which will show the number of different types of tasks
+ * @@author A0147986H
+ */
+
 public class AddCommandTest extends ListOfTaskGuiTest {
 
     //@Test
     public void add() {
-        //add one person
+        //add one task
         TestTask[] currentList = td.getTypicalPersons();
-        TestTask personToAdd = td.hoon;
-        assertAddSuccess(personToAdd, currentList);
-        currentList = TestUtil.addTasksToList(currentList, personToAdd);
+        TestTask taskToAdd = td.hoon;
+        assertAddSuccess(taskToAdd, currentList);
+        currentList = TestUtil.addTasksToList(currentList, taskToAdd);
 
-        //add another person
-        personToAdd = td.ida;
-        assertAddSuccess(personToAdd, currentList);
-        currentList = TestUtil.addTasksToList(currentList, personToAdd);
+        //add another task
+        taskToAdd = td.ida;
+        assertAddSuccess(taskToAdd, currentList);
+        currentList = TestUtil.addTasksToList(currentList, taskToAdd);
 
-        //add duplicate person
+        //add duplicate task
         commandBox.runCommand(td.hoon.getAddCommand());
         assertResultMessage(AddCommand.MESSAGE_DUPLICATE_TASK);
         assertTrue(personListPanel.isListMatching(currentList));
