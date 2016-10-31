@@ -9,21 +9,38 @@ import seedu.unburden.model.task.*;
  */
 public class TypicalTestTasks {
 
-    public static TestTask alice, benson, carl, daniel, elle, fiona, george, hoon, ida;
+    public static TestTask alice, benson, carl, daniel, elle, fiona, george, hoon, ida, luhua, haha, hahaha, hahahaha;
 
     public TypicalTestTasks() {
+        
         try {
             alice =  new PersonBuilder().withName("Alice Pauline").withTags("friends").build();
-            benson = new PersonBuilder().withName("Benson Meier").withTags("owesMoney", "friends").build();
+            
+            benson = new PersonBuilder().withName("Benson Meier").withTags("owesMoney", "friends").build();           
+       
             carl = new PersonBuilder().withName("Carl Kurz").build();
+            
             daniel = new PersonBuilder().withName("Daniel Meier").build();
+            
             elle = new PersonBuilder().withName("Elle Meyer").build();
+            
             fiona = new PersonBuilder().withName("Fiona Kunz").build();
+            
             george = new PersonBuilder().withName("George Best").build();
 
             //Manually added
             hoon = new PersonBuilder().withName("Hoon Meier").build();
+            
             ida = new PersonBuilder().withName("Ida Mueller").build();
+            
+            luhua = new PersonBuilder().withName("Luhua Yang").withDate("21-11-2016").build();
+            
+            haha = new PersonBuilder().withName("haha").withStartTime("1800").build();
+            
+            hahaha = new PersonBuilder().withName("hahaha").withEndTime("2100").build();
+            
+            hahahaha = new PersonBuilder().withName("hahahaha").withStartTime("1900").withEndTime("2100").build();
+            
         } catch (IllegalValueException e) {
             e.printStackTrace();
             assert false : "not possible";

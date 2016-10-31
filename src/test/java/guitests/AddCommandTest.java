@@ -34,7 +34,27 @@ public class AddCommandTest extends ListOfTaskGuiTest {
         assertResultMessage(AddCommand.MESSAGE_DUPLICATE_TASK);
         assertTrue(taskListPanel.isListMatching(currentList));
 
-        //add to empty list
+        //add task with date
+        taskToAdd = td.luhua;
+        assertAddSuccess(taskToAdd, currentList);
+        currentList = TestUtil.addTasksToList(currentList, taskToAdd);
+
+        //add task with start time
+        taskToAdd = td.haha;
+        assertAddSuccess(taskToAdd, currentList);
+        currentList = TestUtil.addTasksToList(currentList, taskToAdd);
+
+        //add task with end time
+        taskToAdd = td.hahaha;
+        assertAddSuccess(taskToAdd, currentList);
+        currentList = TestUtil.addTasksToList(currentList, taskToAdd);
+
+        //add task with both start time and end time
+        taskToAdd = td.hahahaha;
+        assertAddSuccess(taskToAdd, currentList);
+        currentList = TestUtil.addTasksToList(currentList, taskToAdd);
+        
+        //clear the list
         commandBox.runCommand("clear");
         assertAddSuccess(td.alice);
 
