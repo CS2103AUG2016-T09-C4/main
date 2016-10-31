@@ -10,8 +10,7 @@ import seedu.unburden.testutil.TestUtil;
 import static org.junit.Assert.assertTrue;
 
 /**
- * The Summary panel
- * which will show the number of different types of tasks
+ * AddCommandTest
  * @@author A0147986H
  */
 

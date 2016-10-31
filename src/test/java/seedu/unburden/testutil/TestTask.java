@@ -5,7 +5,9 @@ import seedu.unburden.model.task.*;
 
 /**
  * A mutable person object. For testing only.
+ * @@author A0147986H
  */
+
 public class TestTask implements ReadOnlyTask {
 
     private Name name;
@@ -29,9 +31,18 @@ public class TestTask implements ReadOnlyTask {
         return name;
     }
     
+    public void setTaskDescription(TaskDescription taskD) {
+        this.taskD = taskD;
+    }
+        
     @Override
     public TaskDescription getTaskDescription() {
         return taskD;
+    }
+    
+    
+    public void setDate(Date date) {
+        this.date = date;
     }
     
     @Override
@@ -39,9 +50,18 @@ public class TestTask implements ReadOnlyTask {
         return date;
     }
     
+    
+    public void setStartTime(Time startTime) {
+        this.startTime = startTime;
+    }
+    
     @Override
     public Time getStartTime() {
         return startTime;
+    }
+    
+    public void setEndTime(Time endTime) {
+        this.endTime = endTime;
     }
     
     @Override
@@ -49,6 +69,10 @@ public class TestTask implements ReadOnlyTask {
         return endTime;
     }
 
+    public void getTags(UniqueTagList tags) {
+        this.tags = tags;
+    }
+    
     @Override
     public UniqueTagList getTags() {
         return tags;
@@ -66,18 +90,18 @@ public class TestTask implements ReadOnlyTask {
         return sb.toString();
     }
 
-	@Override
-	public boolean getDone() {
-		return done;
-	}
+    @Override
+    public boolean getDone() {
+        return done;
+    }
 
-	@Override
-	public String getDoneString() {
-		if(done == true){
-			return "Task Done!";
-		}
-		else{
-			return "Task unDone!";
-		}
-	}
+    @Override
+    public String getDoneString() {
+        if(done == true){
+            return "Task Done!";
+        }
+        else{
+            return "Task unDone!";
+        }
+    }
 }
