@@ -37,9 +37,9 @@ public class TypicalTestTasks {
             
             haha = new PersonBuilder().withName("haha").withStartTime("1800").build();
             
-            hahaha = new PersonBuilder().withName("hahaha").withEndTime("2100").build();
+            hahaha = new PersonBuilder().withName("hahaha").withDate("31-10-2016").withEndTime("2100").build();
             
-            hahahaha = new PersonBuilder().withName("hahahaha").withStartTime("1900").withEndTime("2100").build();
+            hahahaha = new PersonBuilder().withName("hahahaha").withDate("31-10-2016").withStartTime("1900").withEndTime("2100").build();
             
         } catch (IllegalValueException e) {
             e.printStackTrace();

@@ -39,17 +39,12 @@ public class AddCommandTest extends ListOfTaskGuiTest {
         assertAddSuccess(taskToAdd, currentList);
         currentList = TestUtil.addTasksToList(currentList, taskToAdd);
 
-        //add task with start time
-        taskToAdd = td.haha;
-        assertAddSuccess(taskToAdd, currentList);
-        currentList = TestUtil.addTasksToList(currentList, taskToAdd);
-
-        //add task with end time
+        //add task with date and end time
         taskToAdd = td.hahaha;
         assertAddSuccess(taskToAdd, currentList);
         currentList = TestUtil.addTasksToList(currentList, taskToAdd);
 
-        //add task with both start time and end time
+        //add task with date and both start time/end time
         taskToAdd = td.hahahaha;
         assertAddSuccess(taskToAdd, currentList);
         currentList = TestUtil.addTasksToList(currentList, taskToAdd);
@@ -62,6 +57,14 @@ public class AddCommandTest extends ListOfTaskGuiTest {
         commandBox.runCommand("adds Johnny");
         assertResultMessage(Messages.MESSAGE_UNKNOWN_COMMAND);
         
+        commandBox.runCommand("add Johnny st/2000");
+        assertResultMessage(Messages.MESSAGE_INVALID_COMMAND_FORMAT);
+        
+        commandBox.runCommand("add Johnny et/2100 ");
+        assertResultMessage(Messages.MESSAGE_INVALID_COMMAND_FORMAT);
+        
+        commandBox.runCommand("add Johnny s/2000 e/2100");
+        assertResultMessage(Messages.MESSAGE_INVALID_COMMAND_FORMAT);
    }
     
     private void assertAddSuccess(TestTask personToAdd, TestTask... currentList) {
