@@ -16,7 +16,7 @@ import static org.junit.Assert.assertTrue;
 
 public class AddCommandTest extends ListOfTaskGuiTest {
 
-    //@Test
+    @Test
     public void add() {
         //add one task
         TestTask[] currentList = td.getTypicalPersons();
