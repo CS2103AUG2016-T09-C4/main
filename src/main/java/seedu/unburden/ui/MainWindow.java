@@ -59,6 +59,9 @@ public class MainWindow extends UiPart {
 
     @FXML
     private AnchorPane statusbarPlaceholder;
+    
+    @FXML
+    private AnchorPane helpDisplayPlaceholder;
 
 
     public MainWindow() {
@@ -128,6 +131,10 @@ public class MainWindow extends UiPart {
 
     public AnchorPane getPersonListPlaceholder() {
         return personListPanelPlaceholder;
+    }
+    
+    public AnchorPane getHelpDisplayPlaceholder(){
+    	return helpDisplayPlaceholder;
     }
 
     public void hide() {
