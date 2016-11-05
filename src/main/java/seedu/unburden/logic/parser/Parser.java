@@ -375,15 +375,17 @@ public class Parser {
 
 			
 			ArrayList<Integer> indexesInt1 = new ArrayList<> ();
-            /*
-			indexesInt1[0] = Integer.parseInt(SeperateIndexes1[0]);
-			indexesInt1[1] = Integer.parseInt(SeperateIndexes1[1]);*/
-
-
+            
+//			indexesInt1.get(0).= Integer.parseInt(SeperateIndexes1[0]);
+//			indexesInt1.get(1) = Integer.parseInt(SeperateIndexes1[1]);*/
+            
+			indexesInt1.add(Integer.parseInt(SeperateIndexes1[0]));
+			indexesInt1.add(Integer.parseInt(SeperateIndexes1[1]));
+			
 			for(int i=0 ; i<2; i++){     
 				
-				Optional<Integer> index1 = Optional.of(Integer.parseInt(SeperateIndexes1[0]));
-				
+				Optional<Integer> index1 = Optional.of(Integer.parseInt(SeperateIndexes1[i]));
+							
 				if (!index1.isPresent()) {
 					return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteCommand.MESSAGE_USAGE));
 				}
@@ -399,22 +401,18 @@ public class Parser {
 
 			String[] SeperateIndexes2 = indexes2.split(" ");
 
-			int[] indexesInt2 = new int[SeperateIndexes2.length]; 
-
-			for(int i=0; i<(SeperateIndexes2.length); i++){
-
-				indexesInt2[i] = Integer.parseInt(SeperateIndexes2[i]);     	       		
-
-			}
+			ArrayList<Integer> indexesInt2 = new ArrayList<> (); 
 			
-			for(int i=0 ; i<SeperateIndexes2.length; i++){            	            
+			for(int i=0; i<(SeperateIndexes2.length); i++){
 				
-				index = indexesInt1[i];
+				indexesInt2.add(Integer.parseInt(SeperateIndexes2[i]));
 				
-				if (!index.isPresent()) {
+				Optional<Integer> index2 = Optional.of(Integer.parseInt(SeperateIndexes2[i]));
+				
+				if (!index2.isPresent()) {
 					return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteCommand.MESSAGE_USAGE));
 				}
-			}
+			}		
 			return new DeleteCommand(indexesInt2); 
 		}
 

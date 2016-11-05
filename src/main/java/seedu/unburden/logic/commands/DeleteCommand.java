@@ -1,4 +1,6 @@
 package seedu.unburden.logic.commands;
+import java.util.ArrayList;
+
 import seedu.unburden.commons.core.Messages;
 import seedu.unburden.commons.core.UnmodifiableObservableList;
 import seedu.unburden.commons.exceptions.IllegalValueException;
@@ -23,9 +25,9 @@ public class DeleteCommand extends Command {
 
     public static final String MESSAGE_DELETE_TASK_SUCCESS = "Deleted Task: %1$s";
 
-    public final int[] targetIndexes;
+    public final ArrayList<Integer> targetIndexes;
 
-    public DeleteCommand(int[] targetIndexes) {
+    public DeleteCommand(ArrayList<Integer> targetIndexes) {
         this.targetIndexes = targetIndexes;
     }
 
@@ -41,13 +43,13 @@ public class DeleteCommand extends Command {
     public CommandResult execute() throws DuplicateTagException, IllegalValueException {
 
         UnmodifiableObservableList<ReadOnlyTask> lastShownList = model.getFilteredTaskList();
-        for(int i = 0; i < targetIndexes.length; i++){
+        for(int i = 0; i < targetIndexes.size(); i++){
         	
-        if (lastShownList.size() < targetIndexes[i]) {
+        if (lastShownList.size() < targetIndexes.get(i)) {
             indicateAttemptToExecuteIncorrectCommand();
             return new CommandResult(Messages.MESSAGE_INVALID_TASK_DISPLAYED_INDEX);
         }
-        	 ReadOnlyTask taskToDelete = lastShownList.get(targetIndexes[i] - i);
+        	 ReadOnlyTask taskToDelete = lastShownList.get(targetIndexes.get(i) - i);
 
              try {
             	model.saveToPrevLists();
