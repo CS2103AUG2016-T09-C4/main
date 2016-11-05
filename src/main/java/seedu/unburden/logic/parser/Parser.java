@@ -359,50 +359,68 @@ public class Parser {
 	 * @@author A0147986H 
 	 */
 	private Command prepareDelete(String args) throws ParseException {
+
+		final Matcher matcherList = INDEX_LIST_FORMAT.matcher(args);
+		final Matcher matcherPhase = INDEX_PHASE_FORMAT.matcher(args);      
+		Optional<Integer> index = new Optional<Integer>();
 		
-        final Matcher matcherList = INDEX_LIST_FORMAT.matcher(args);
-        final Matcher matcherPhase = INDEX_PHASE_FORMAT.matcher(args);      
-        
-  		if(!matcherList.matches()&&!matcherPhase.matches()){
-  			return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteCommand.MESSAGE_USAGE));		
-  		}
-		
-  		if(matcherPhase.matches()){
-  			
-            String indexes1 = matcherPhase.group("targetIndex");
-            
-            String[] SeperateIndexes1 = indexes1.split("-");
-            
-            int[] indexesInt1 = new int[2];
-            		
-            indexesInt1[0] = Integer.parseInt(SeperateIndexes1[0]);
-            indexesInt1[1] = Integer.parseInt(SeperateIndexes1[1]);
-  				 			
-  			return new DeleteCommand(indexesInt1);
-  			  		   
-  	    }
-  		
-  		else if(matcherList.matches()){
-        	
-        	String indexes2 = matcherList.group("targetIndex");     
-        	
-        	String[] SeperateIndexes2 = indexes2.split(" ");
-        	
-        	int[] indexesInt2 = new int[SeperateIndexes2.length]; 
-        	
-        	for(int i=0; i<(SeperateIndexes2.length); i++){
-        		
-        		indexesInt2[i] = Integer.parseInt(SeperateIndexes2[i]);     	       		
-        		
-      	    }
-        	return new DeleteCommand(indexesInt2); 
-        }
-  		
-  		else
-  			
-  		return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteCommand.MESSAGE_USAGE));	
-  		
-  		/*
+		if(!matcherList.matches()&&!matcherPhase.matches()){
+			return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteCommand.MESSAGE_USAGE));		
+		}
+
+		if(matcherPhase.matches()){
+
+			String indexes1 = matcherPhase.group("targetIndex");
+
+			String[] SeperateIndexes1 = indexes1.split("-");
+
+			int[] indexesInt1 = new int[2];
+
+			indexesInt1[0] = Integer.parseInt(SeperateIndexes1[0]);
+			indexesInt1[1] = Integer.parseInt(SeperateIndexes1[1]);
+
+
+			for(int i=0 ; i<2; i++){            	            
+				index = indexesInt1[i];
+
+				if (!index.isPresent()) {
+					return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteCommand.MESSAGE_USAGE));
+				}
+			}
+
+			return new DeleteCommand(indexesInt1);
+
+		}
+
+		else if(matcherList.matches()){
+
+			String indexes2 = matcherList.group("targetIndex");     
+
+			String[] SeperateIndexes2 = indexes2.split(" ");
+
+			int[] indexesInt2 = new int[SeperateIndexes2.length]; 
+
+			for(int i=0; i<(SeperateIndexes2.length); i++){
+
+				indexesInt2[i] = Integer.parseInt(SeperateIndexes2[i]);     	       		
+
+			}
+			
+			for(int i=0 ; i<SeperateIndexes2.length; i++){            	            
+				index = indexesInt1[i];
+				
+				if (!index.isPresent()) {
+					return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteCommand.MESSAGE_USAGE));
+				}
+			}
+			return new DeleteCommand(indexesInt2); 
+		}
+
+		else
+
+			return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteCommand.MESSAGE_USAGE));	
+
+		/*
 		Optional<Integer> index = parseIndex(args);
 		if (!index.isPresent()) {
 			return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteCommand.MESSAGE_USAGE));
