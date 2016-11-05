@@ -362,11 +362,11 @@ public class Parser {
 
 		final Matcher matcherList = INDEX_LIST_FORMAT.matcher(args.trim());
 		final Matcher matcherPhase = INDEX_PHASE_FORMAT.matcher(args.trim());  
-		
+
 		if(!matcherList.matches()&&!matcherPhase.matches()){
 			System.out.print(100000000);	
 			return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteCommand.MESSAGE_USAGE));		
-		
+
 		}
 
 		if(matcherPhase.matches()){
@@ -375,43 +375,45 @@ public class Parser {
 
 			String[] SeperateIndexes1 = indexes1.trim().split("-");
 
-			
+
 			ArrayList<Integer> indexesInt1 = new ArrayList<> ();
-            
-//			indexesInt1.get(0).= Integer.parseInt(SeperateIndexes1[0]);
-//			indexesInt1.get(1) = Integer.parseInt(SeperateIndexes1[1]);*/
-            
-			indexesInt1.add(Integer.parseInt(SeperateIndexes1[0]));
-			indexesInt1.add(Integer.parseInt(SeperateIndexes1[1]));
-			
-			for(int i=0 ; i<2; i++){     
-				
-				Optional<Integer> index1 = Optional.of(Integer.parseInt(SeperateIndexes1[i]));
-				System.out.print(SeperateIndexes1[0] + SeperateIndexes1[1]);			
+
+			int low_bond = Integer.parseInt(SeperateIndexes1[0]);
+			int high_bond =	Integer.parseInt(SeperateIndexes1[1]);
+
+
+			for(int i= low_bond; i<=high_bond; i++){     
+
+				indexesInt1.add(i);
+
+				Optional<Integer> index1 = Optional.of(i);
+
+				System.out.print(SeperateIndexes1[0] + SeperateIndexes1[1]);	
+
 				if (!index1.isPresent()) {
 					return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteCommand.MESSAGE_USAGE));
 				}
 			}
-           
+
 			return new DeleteCommand(indexesInt1);
 
 		}
 
 		else if(matcherList.matches()){
-  
+
 			System.out.print(2222222);	
 			String indexes2 = matcherList.group("targetIndex");     
 
 			String[] SeperateIndexes2 = indexes2.split(" ");
 
 			ArrayList<Integer> indexesInt2 = new ArrayList<> (); 
-			
+
 			for(int i=0; i<(SeperateIndexes2.length); i++){
-				
+
 				indexesInt2.add(Integer.parseInt(SeperateIndexes2[i]));
-				
+
 				Optional<Integer> index2 = Optional.of(Integer.parseInt(SeperateIndexes2[i]));
-				
+
 				if (!index2.isPresent()) {
 					return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteCommand.MESSAGE_USAGE));
 				}
@@ -432,7 +434,7 @@ public class Parser {
 		return new DeleteCommand(index.get());*/
 	}
 
-	
+
 	private Command prepareList(String args) throws ParseException {
 		Calendar calendar = Calendar.getInstance();
 		calendar.setTime(calendar.getTime());
