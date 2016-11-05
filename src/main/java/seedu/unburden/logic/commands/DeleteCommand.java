@@ -21,30 +21,27 @@ public class DeleteCommand extends Command {
 
     public static final String MESSAGE_DELETE_TASK_SUCCESS = "Deleted Task: %1$s";
 
-    public final String targetIndexes;
-    
-    public final int targetIndex;
-    
+    public final int[] targetIndexes;
+        
     public final String mode;
     
     public final int targetIndex_low,targetIndex_high;
 
-    public DeleteCommand(int targetIndex) {
-        this.targetIndex = targetIndex;
-        this.targetIndexes = null;
+    public DeleteCommand(int[] targetIndexes) {
+        this.targetIndexes = targetIndexes;
         this.mode = "index";
         this.targetIndex_low = 0;
         this.targetIndex_high = 0;
     }
 
-    public DeleteCommand(String targetIndexes) {
+    /*public DeleteCommand(String targetIndexes) {
     	this.targetIndex = 0;
         this.targetIndexes = targetIndexes;
         this.mode = "indexes";
         this.targetIndex_low = 0;
         this.targetIndex_high = 0;
     }
-    
+    */
     @Override
     public CommandResult execute() throws DuplicateTagException, IllegalValueException {
 
