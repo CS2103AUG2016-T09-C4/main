@@ -4,8 +4,11 @@ import seedu.unburden.commons.core.UnmodifiableObservableList;
 import seedu.unburden.model.task.ReadOnlyTask;
 import seedu.unburden.model.task.UniqueTaskList.TaskNotFoundException;
 
+
 /**
- * Deletes a person identified using it's last displayed index from the address book.
+ * Deletes a task or a set of tasks identified 
+ * using it's last displayed index from the address book.
+ * Author@@ A0147986H
  */
 public class DeleteCommand extends Command {
 
@@ -18,15 +21,32 @@ public class DeleteCommand extends Command {
 
     public static final String MESSAGE_DELETE_TASK_SUCCESS = "Deleted Task: %1$s";
 
+    public final String targetIndexes;
+    
     public final int targetIndex;
+    
+    public final String mode;
+    
+    public final int targetIndex_low,targetIndex_high;
 
     public DeleteCommand(int targetIndex) {
         this.targetIndex = targetIndex;
+        this.targetIndexes = null;
+        this.mode = "index";
+        this.targetIndex_low = 0;
+        this.targetIndex_high = 0;
     }
 
-
+    public DeleteCommand(String targetIndexes) {
+    	this.targetIndex = 0;
+        this.targetIndexes = targetIndexes;
+        this.mode = "indexes";
+        this.targetIndex_low = 0;
+        this.targetIndex_high = 0;
+    }
+    
     @Override
-    public CommandResult execute()  {
+    public CommandResult execute() throws DuplicateTagException, IllegalValueException {
 
         UnmodifiableObservableList<ReadOnlyTask> lastShownList = model.getFilteredTaskList();
 
@@ -35,6 +55,21 @@ public class DeleteCommand extends Command {
             return new CommandResult(Messages.MESSAGE_INVALID_TASK_DISPLAYED_INDEX);
         }
 
+        if(this.mode == "index"){
+        	 ReadOnlyTask taskToDelete = lastShownList.get(targetIndex - 1);
+
+             try {
+            	model.saveToPrevLists();
+                 model.deleteTask(taskToDelete);
+             } catch (TaskNotFoundException pnfe) {
+                 assert false : "The target task cannot be missing";
+             }
+             return new CommandResult(String.format(MESSAGE_DELETE_TASK_SUCCESS, taskToDelete));
+         }  
+        	
+        if(this.mode =="indexes"){
+              for(int i=targetIndex_low; i<=targetIndex_high; i++) { 
+        
         ReadOnlyTask taskToDelete = lastShownList.get(targetIndex - 1);
 
         try {
@@ -44,6 +79,8 @@ public class DeleteCommand extends Command {
             assert false : "The target task cannot be missing";
         }
         return new CommandResult(String.format(MESSAGE_DELETE_TASK_SUCCESS, taskToDelete));
-    }
-
+        }    
+      }
+   }
 }
+
