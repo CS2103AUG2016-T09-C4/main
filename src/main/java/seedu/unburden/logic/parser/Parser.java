@@ -373,14 +373,13 @@ public class Parser {
             
             String[] SeperateIndexes1 = indexes1.split("-");
             
-            int a = Integer.parseInt(SeperateIndexes1[0]);
-            int b = Integer.parseInt(SeperateIndexes1[1]);
-            
-  			for(int i=a; i<=b; i++){
+            int[] indexesInt1 = new int[2];
+            		
+            indexesInt1[0] = Integer.parseInt(SeperateIndexes1[0]);
+            indexesInt1[1] = Integer.parseInt(SeperateIndexes1[1]);
   				 			
-  			return new DeleteCommand(i);
-  			
-  		   }
+  			return new DeleteCommand(indexesInt1);
+  			  		   
   	    }
   		
   		else if(matcherList.matches()){
@@ -389,12 +388,16 @@ public class Parser {
         	
         	String[] SeperateIndexes2 = indexes2.split(" ");
         	
+        	int[] indexesInt2 = new int[SeperateIndexes2.length]; 
+        	
         	for(int i=0; i<(SeperateIndexes2.length); i++){
         		
-        		return new DeleteCommand(Integer.parseInt(SeperateIndexes2[i]));
-        	}
-        	        
+        		indexesInt2[i] = Integer.parseInt(SeperateIndexes2[i]);     	       		
+        		
+      	    }
+        	return new DeleteCommand(indexesInt2); 
         }
+  		
   		return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteCommand.MESSAGE_USAGE));	
   		
   		/*
