@@ -93,7 +93,14 @@ public class Parser {
 	private static final String ALL = "all";
 
 	private static final SimpleDateFormat DATEFORMATTER = new SimpleDateFormat("dd-MM-yyyy");
-
+	
+    //@@author A0147986H
+	private static final Pattern INDEX_PHASE_FORMAT = Pattern.compile("(?<targetIndex>\\d+-\\d+)");
+	
+	private static final Pattern INDEX_LIST_FORMAT = Pattern.compile("(?<targetIndex>\\d+(\\s+\\d+)*");
+	
+	
+	
 	public Parser() {
 	}
 
@@ -349,17 +356,57 @@ public class Parser {
 	 * @param args
 	 *            full command args string
 	 * @return the prepared command
+	 * @@author A0147986H 
 	 */
 	private Command prepareDelete(String args) {
-
+		
+        final Matcher matcherList = INDEX_LIST_FORMAT.matcher(args);
+        final Matcher matcherPhase = INDEX_PHASE_FORMAT.matcher(args);      
+        
+  		if(!matcherList.matches()&&!matcherPhase.matches()){
+  			return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteCommand.MESSAGE_USAGE));		
+  		}
+		
+  		if(matcherPhase.matches()){
+  			
+            String indexes1 = matcherPhase.group("targetIndex");
+            
+            String[] SeperateIndexes1 = indexes1.split("-");
+            
+            int a = Integer.parseInt(SeperateIndexes1[0]);
+            int b = Integer.parseInt(SeperateIndexes1[1]);
+            
+  			for(int i=a; i<=b; i++){
+  				 			
+  			return new DeleteCommand(i);
+  			
+  		   }
+  	    }
+  		
+  		else if(matcherList.matches()){
+        	
+        	String indexes2 = matcherList.group("targetIndex");     
+        	
+        	String[] SeperateIndexes2 = indexes2.split(" ");
+        	
+        	for(int i=0; i<(SeperateIndexes2.length); i++){
+        		
+        		return new DeleteCommand(Integer.parseInt(SeperateIndexes2[i]));
+        	}
+        	        
+        }
+  		return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteCommand.MESSAGE_USAGE));	
+  		
+  		/*
 		Optional<Integer> index = parseIndex(args);
 		if (!index.isPresent()) {
 			return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteCommand.MESSAGE_USAGE));
 		}
 
-		return new DeleteCommand(index.get());
+		return new DeleteCommand(index.get());*/
 	}
 
+	
 	private Command prepareList(String args) throws ParseException {
 		Calendar calendar = Calendar.getInstance();
 		calendar.setTime(calendar.getTime());
