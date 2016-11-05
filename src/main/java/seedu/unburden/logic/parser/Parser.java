@@ -358,7 +358,7 @@ public class Parser {
 	 * @return the prepared command
 	 * @@author A0147986H 
 	 */
-	private Command prepareDelete(String args) {
+	private Command prepareDelete(String args) throws ParseException {
 		
         final Matcher matcherList = INDEX_LIST_FORMAT.matcher(args);
         final Matcher matcherPhase = INDEX_PHASE_FORMAT.matcher(args);      
@@ -398,6 +398,8 @@ public class Parser {
         	return new DeleteCommand(indexesInt2); 
         }
   		
+  		else
+  			
   		return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteCommand.MESSAGE_USAGE));	
   		
   		/*
