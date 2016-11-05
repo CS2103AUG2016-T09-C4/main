@@ -97,7 +97,7 @@ public class Parser {
     //@@author A0147986H
 	private static final Pattern INDEX_PHASE_FORMAT = Pattern.compile("(?<targetIndex>\\d+-\\d+)");
 	
-	private static final Pattern INDEX_LIST_FORMAT = Pattern.compile("(?<targetIndex>\\d+(\\s+\\d+)*");
+	private static final Pattern INDEX_LIST_FORMAT = Pattern.compile("(?<targetIndex>\\d+(\\s+\\d+)*)");
 	
 	
 	
@@ -360,18 +360,20 @@ public class Parser {
 	 */
 	private Command prepareDelete(String args) throws ParseException {
 
-		final Matcher matcherList = INDEX_LIST_FORMAT.matcher(args);
-		final Matcher matcherPhase = INDEX_PHASE_FORMAT.matcher(args);      
+		final Matcher matcherList = INDEX_LIST_FORMAT.matcher(args.trim());
+		final Matcher matcherPhase = INDEX_PHASE_FORMAT.matcher(args.trim());  
 		
 		if(!matcherList.matches()&&!matcherPhase.matches()){
+			System.out.print(100000000);	
 			return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteCommand.MESSAGE_USAGE));		
+		
 		}
 
 		if(matcherPhase.matches()){
-
+			System.out.print(1111111);	
 			String indexes1 = matcherPhase.group("targetIndex");
 
-			String[] SeperateIndexes1 = indexes1.split("-");
+			String[] SeperateIndexes1 = indexes1.trim().split("-");
 
 			
 			ArrayList<Integer> indexesInt1 = new ArrayList<> ();
@@ -385,18 +387,19 @@ public class Parser {
 			for(int i=0 ; i<2; i++){     
 				
 				Optional<Integer> index1 = Optional.of(Integer.parseInt(SeperateIndexes1[i]));
-							
+				System.out.print(SeperateIndexes1[0] + SeperateIndexes1[1]);			
 				if (!index1.isPresent()) {
 					return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteCommand.MESSAGE_USAGE));
 				}
 			}
-
+           
 			return new DeleteCommand(indexesInt1);
 
 		}
 
 		else if(matcherList.matches()){
-
+  
+			System.out.print(2222222);	
 			String indexes2 = matcherList.group("targetIndex");     
 
 			String[] SeperateIndexes2 = indexes2.split(" ");
