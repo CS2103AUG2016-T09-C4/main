@@ -46,6 +46,8 @@ public interface ReadOnlyTask {
         if(getTaskDescription().getFullTaskDescription() == "" && getDate().getFullDate() == "" && getStartTime().getFullTime() == "" && getEndTime().getFullTime() == ""){
         	builder.append(getName());
         	builder.append("\n");
+        	builder.append("Tags : ");
+        	builder.append("\n");
         	getTags().forEach(builder::append);
         }
         
@@ -56,6 +58,8 @@ public interface ReadOnlyTask {
 	        builder.append("Task Description : ");        
 	        builder.append(getTaskDescription());
 	        builder.append("\n");
+	    	builder.append("Tags : ");
+        	builder.append("\n");
 	        getTags().forEach(builder::append);
         }
         
@@ -66,6 +70,8 @@ public interface ReadOnlyTask {
 	        builder.append("Deadline : ");        
 	        builder.append(getDate());
 	        builder.append("\n");
+	    	builder.append("Tags : ");
+        	builder.append("\n");
 	        getTags().forEach(builder::append);
         }
         
@@ -79,6 +85,8 @@ public interface ReadOnlyTask {
 	        builder.append("Deadline : ");        
 	        builder.append(getDate());
 	        builder.append("\n");
+	    	builder.append("Tags : ");
+        	builder.append("\n");
 	        getTags().forEach(builder::append);
         }
         
@@ -92,6 +100,8 @@ public interface ReadOnlyTask {
 	        builder.append("End time : ");  
 	        builder.append(getEndTime() + "   ");
 	        builder.append("\n");
+	    	builder.append("Tags : ");
+        	builder.append("\n");
 	        getTags().forEach(builder::append);
         }
         
@@ -108,6 +118,8 @@ public interface ReadOnlyTask {
 	        builder.append("End time : ");  
 	        builder.append(getEndTime() + "   ");
 	        builder.append("\n");
+	    	builder.append("Tags : ");
+        	builder.append("\n");
 	        getTags().forEach(builder::append);
         }
         
@@ -122,6 +134,8 @@ public interface ReadOnlyTask {
 	        builder.append(getStartTime() + " - ");
 	        builder.append(getEndTime() + "   ");
 	        builder.append("\n");
+	    	builder.append("Tags : ");
+        	builder.append("\n");
 	        getTags().forEach(builder::append);
         }
         
@@ -139,6 +153,8 @@ public interface ReadOnlyTask {
 	        builder.append(getStartTime() + " - ");
 	        builder.append(getEndTime() + "   ");
 	        builder.append("\n");
+	    	builder.append("Tags : ");
+        	builder.append("\n");
 	        getTags().forEach(builder::append);
         }
         
