@@ -364,61 +364,61 @@ public class Parser {
 		final Matcher matcherPhase = INDEX_PHASE_FORMAT.matcher(args.trim());  
 
 		if(!matcherList.matches()&&!matcherPhase.matches()){
-			System.out.print(100000000);	
+
 			return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteCommand.MESSAGE_USAGE));		
 
 		}
 
 		if(matcherPhase.matches()){
-			System.out.print(1111111);	
-			String indexes1 = matcherPhase.group("targetIndex");
 
-			String[] SeperateIndexes1 = indexes1.trim().split("-");
+			String indexes_phase = matcherPhase.group("targetIndex");
+
+			String[] SeperateIndexes_phase = indexes_phase.trim().split("-");
 
 
-			ArrayList<Integer> indexesInt1 = new ArrayList<> ();
+			ArrayList<Integer> indexesInt_phase = new ArrayList<> ();
 
-			int low_bond = Integer.parseInt(SeperateIndexes1[0]);
-			int high_bond =	Integer.parseInt(SeperateIndexes1[1]);
+			int low_bond = Integer.parseInt(SeperateIndexes_phase[0]);
+			int high_bond =	Integer.parseInt(SeperateIndexes_phase[1]);
 
 
 			for(int i= low_bond; i<=high_bond; i++){     
 
-				indexesInt1.add(i);
+				indexesInt_phase.add(i);
 
-				Optional<Integer> index1 = Optional.of(i);
+				Optional<Integer> index_phase = Optional.of(i);
 
-				System.out.print(SeperateIndexes1[0] + SeperateIndexes1[1]);	
+				System.out.print(SeperateIndexes_phase[0] + SeperateIndexes_phase[1]);	
 
-				if (!index1.isPresent()) {
+				if (!index_phase.isPresent()) {
 					return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteCommand.MESSAGE_USAGE));
 				}
 			}
 
-			return new DeleteCommand(indexesInt1);
+			return new DeleteCommand(indexesInt_phase);
 
 		}
 
 		else if(matcherList.matches()){
 
-			System.out.print(2222222);	
-			String indexes2 = matcherList.group("targetIndex");     
 
-			String[] SeperateIndexes2 = indexes2.split(" ");
+			String indexes_list = matcherList.group("targetIndex");     
 
-			ArrayList<Integer> indexesInt2 = new ArrayList<> (); 
+			String[] SeperateIndexes_list = indexes_list.split(" ");
 
-			for(int i=0; i<(SeperateIndexes2.length); i++){
+			ArrayList<Integer> indexesInt_list = new ArrayList<> (); 
 
-				indexesInt2.add(Integer.parseInt(SeperateIndexes2[i]));
+			for(int i=0; i<(SeperateIndexes_list.length); i++){
 
-				Optional<Integer> index2 = Optional.of(Integer.parseInt(SeperateIndexes2[i]));
+				indexesInt_list.add(Integer.parseInt(SeperateIndexes_list[i]));
 
-				if (!index2.isPresent()) {
+				Optional<Integer> index_list = Optional.of(Integer.parseInt(SeperateIndexes_list[i]));
+
+				if (!index_list.isPresent()) {
 					return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteCommand.MESSAGE_USAGE));
 				}
 			}		
-			return new DeleteCommand(indexesInt2); 
+			return new DeleteCommand(indexesInt_list); 
 		}
 
 		else
@@ -434,7 +434,24 @@ public class Parser {
 		return new DeleteCommand(index.get());*/
 	}
 
+	/**
+	 * Parses arguments in the context of the select task command.
+	 *
+	 * @param args
+	 *            full command args string
+	 * @return the prepared command
+	 */
+	private Command prepareSelect(String args) {
 
+		Optional<Integer> index = parseIndex(args);
+		if (!index.isPresent()) {
+			return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, SelectCommand.MESSAGE_USAGE));
+		}
+
+		return new SelectCommand(index.get());
+	}
+
+	
 	private Command prepareList(String args) throws ParseException {
 		Calendar calendar = Calendar.getInstance();
 		calendar.setTime(calendar.getTime());
@@ -558,25 +575,6 @@ public class Parser {
 			return new SetDirectoryCommand(Config.ORIGINAL_TASK_PATH);
 
 		return new SetDirectoryCommand(pathMatcher.group("filename") + ".xml");
-	}
-
-	/**
-	 * Parses arguments in the context of the select person command.
-	 *
-	 * @param args
-	 *            full command args string
-	 * @return the prepared command
-	 */
-
-	// @@author generated
-	private Command prepareSelect(String args) {
-
-		Optional<Integer> index = parseIndex(args);
-		if (!index.isPresent()) {
-			return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, SelectCommand.MESSAGE_USAGE));
-		}
-
-		return new SelectCommand(index.get());
 	}
 
 	/**
