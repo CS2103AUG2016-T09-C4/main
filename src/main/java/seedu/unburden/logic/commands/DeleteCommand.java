@@ -49,7 +49,7 @@ public class DeleteCommand extends Command {
             indicateAttemptToExecuteIncorrectCommand();
             return new CommandResult(Messages.MESSAGE_INVALID_TASK_DISPLAYED_INDEX);
         }
-        	 ReadOnlyTask taskToDelete = lastShownList.get(targetIndexes.get(i) - i);
+        	 ReadOnlyTask taskToDelete = lastShownList.get(targetIndexes.get(i) - i - 1);
 
              try {
             	model.saveToPrevLists();
