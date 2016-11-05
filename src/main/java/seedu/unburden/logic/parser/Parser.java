@@ -362,7 +362,6 @@ public class Parser {
 
 		final Matcher matcherList = INDEX_LIST_FORMAT.matcher(args);
 		final Matcher matcherPhase = INDEX_PHASE_FORMAT.matcher(args);      
-		Optional<Integer> index = new Optional<Integer>();
 		
 		if(!matcherList.matches()&&!matcherPhase.matches()){
 			return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteCommand.MESSAGE_USAGE));		
@@ -374,16 +373,18 @@ public class Parser {
 
 			String[] SeperateIndexes1 = indexes1.split("-");
 
-			int[] indexesInt1 = new int[2];
-
+			
+			ArrayList<Integer> indexesInt1 = new ArrayList<> ();
+            /*
 			indexesInt1[0] = Integer.parseInt(SeperateIndexes1[0]);
-			indexesInt1[1] = Integer.parseInt(SeperateIndexes1[1]);
+			indexesInt1[1] = Integer.parseInt(SeperateIndexes1[1]);*/
 
 
-			for(int i=0 ; i<2; i++){            	            
-				index = indexesInt1[i];
-
-				if (!index.isPresent()) {
+			for(int i=0 ; i<2; i++){     
+				
+				Optional<Integer> index1 = Optional.of(Integer.parseInt(SeperateIndexes1[0]));
+				
+				if (!index1.isPresent()) {
 					return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteCommand.MESSAGE_USAGE));
 				}
 			}
@@ -407,6 +408,7 @@ public class Parser {
 			}
 			
 			for(int i=0 ; i<SeperateIndexes2.length; i++){            	            
+				
 				index = indexesInt1[i];
 				
 				if (!index.isPresent()) {
