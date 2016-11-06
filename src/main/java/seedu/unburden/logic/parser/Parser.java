@@ -357,16 +357,101 @@ public class Parser {
 	 * @param args
 	 *            full command args string
 	 * @return the prepared command
+	 * @@author A0147986H 
 	 */
-	private Command prepareDelete(String args) {
+	private Command prepareDelete(String args) throws ParseException {
 
+		final Matcher matcherList = INDEX_LIST_FORMAT.matcher(args.trim());
+		final Matcher matcherPhase = INDEX_PHASE_FORMAT.matcher(args.trim());  
+
+		if(!matcherList.matches()&&!matcherPhase.matches()){
+
+			return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteCommand.MESSAGE_USAGE));		
+
+		}
+
+		if(matcherPhase.matches()){
+
+			String indexes_phase = matcherPhase.group("targetIndex");
+
+			String[] SeperateIndexes_phase = indexes_phase.trim().split("-");
+
+
+			ArrayList<Integer> indexesInt_phase = new ArrayList<> ();
+
+			int low_bond = Integer.parseInt(SeperateIndexes_phase[0]);
+			int high_bond =	Integer.parseInt(SeperateIndexes_phase[1]);
+
+
+			for(int i= low_bond; i<=high_bond; i++){     
+
+				indexesInt_phase.add(i);
+
+				Optional<Integer> index_phase = Optional.of(i);
+
+				System.out.print(SeperateIndexes_phase[0] + SeperateIndexes_phase[1]);	
+
+				if (!index_phase.isPresent()) {
+					return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteCommand.MESSAGE_USAGE));
+				}
+			}
+
+			return new DeleteCommand(indexesInt_phase);
+
+		}
+
+		else if(matcherList.matches()){
+
+
+			String indexes_list = matcherList.group("targetIndex");     
+
+			String[] SeperateIndexes_list = indexes_list.split(" ");
+
+			ArrayList<Integer> indexesInt_list = new ArrayList<> (); 
+
+			for(int i=0; i<(SeperateIndexes_list.length); i++){
+
+				indexesInt_list.add(Integer.parseInt(SeperateIndexes_list[i]));
+
+				Optional<Integer> index_list = Optional.of(Integer.parseInt(SeperateIndexes_list[i]));
+
+				if (!index_list.isPresent()) {
+					return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteCommand.MESSAGE_USAGE));
+				}
+			}		
+			return new DeleteCommand(indexesInt_list); 
+		}
+
+		else
+
+			return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteCommand.MESSAGE_USAGE));	
+
+		/*
 		Optional<Integer> index = parseIndex(args);
 		if (!index.isPresent()) {
 			return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteCommand.MESSAGE_USAGE));
 		}
 
-		return new DeleteCommand(index.get());
+		return new DeleteCommand(index.get());*/
 	}
+
+	/**
+	 * Parses arguments in the context of the select task command.
+	 *
+	 * @param args
+	 *            full command args string
+	 * @return the prepared command
+	 */
+	private Command prepareSelect(String args) {
+
+		Optional<Integer> index = parseIndex(args);
+		if (!index.isPresent()) {
+			return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, SelectCommand.MESSAGE_USAGE));
+		}
+
+		return new SelectCommand(index.get());
+	}
+
 	
 	
 	//@@author A0139678J
@@ -496,24 +581,6 @@ public class Parser {
 	}
 	//@@author
 
-	/**
-	 * Parses arguments in the context of the select person command.
-	 *
-	 * @param args
-	 *            full command args string
-	 * @return the prepared command
-	 */
-
-	//@@author generated
-	private Command prepareSelect(String args) {
-
-		Optional<Integer> index = parseIndex(args);
-		if (!index.isPresent()) {
-			return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, SelectCommand.MESSAGE_USAGE));
-		}
-
-		return new SelectCommand(index.get());
-	}
 
 	/**
 	 * Returns the specified index in the {@code command} IF a positive unsigned
