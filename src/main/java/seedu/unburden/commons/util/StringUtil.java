@@ -9,9 +9,13 @@ import java.util.List;
 import javafx.collections.ObservableList;
 import seedu.unburden.model.tag.Tag;
 import seedu.unburden.model.tag.UniqueTagList;
+import seedu.unburden.model.task.ReadOnlyTask;
+
+//@@author A0147986H
 
 /**
  * Helper functions for handling strings.
+ * 
  */
 public class StringUtil {
     public static boolean containsIgnoreCase(String source, String query) {
@@ -19,20 +23,6 @@ public class StringUtil {
         List<String> strings = Arrays.asList(split);
         return strings.stream().filter(s -> s.equals(query.toLowerCase())).count() > 0;
     }
-    
-    /*public static boolean tagsContainsIgnoreCase(UniqueTagList source, String query) {
-    	boolean truefalse = false;
-    	ObservableList<Tag> list = source.getInternalList();
-    	String[] split;
-    	List<String> strings = null;
-    	for(Tag tag: list){
-    		split = tag.tagName.toLowerCase().split("\\s+");
-    		strings = Arrays.asList(split);
-    		truefalse = truefalse || strings.stream().filter(s -> s.equals(query.toLowerCase())).count() > 0;
-    	}
-        return truefalse;
-    }*/
-    
     
     public static boolean containsDate(String source, String query){
     	List<String> strings = new ArrayList<String>(Arrays.asList(source));
@@ -57,4 +47,15 @@ public class StringUtil {
     public static boolean isUnsignedInteger(String s){
         return s != null && s.matches("^0*[1-9]\\d*$");
     }
+    
+    //@@author A0147986H
+    public static String getTaskDetails(ArrayList<ReadOnlyTask> taskList){
+    	StringBuilder resultedList=new StringBuilder();
+    	for(ReadOnlyTask p:taskList){
+    		resultedList.append(p.toString());
+    		resultedList.append("\n\n");
+    	}
+    	return resultedList.toString();
+    }
+    
 }

@@ -7,6 +7,7 @@ import seedu.unburden.commons.core.Messages;
 import seedu.unburden.commons.events.model.ListOfTaskChangedEvent;
 import seedu.unburden.commons.events.ui.JumpToListRequestEvent;
 import seedu.unburden.commons.events.ui.ShowHelpRequestEvent;
+import seedu.unburden.commons.util.StringUtil;
 import seedu.unburden.logic.Logic;
 import seedu.unburden.logic.LogicManager;
 import seedu.unburden.logic.commands.*;
@@ -673,7 +674,7 @@ public class LogicManagerTest {
 			assertCommandBehavior(commandWord + " 3", expectedMessage, model.getListOfTask(), taskList);
 		}
 	}
-
+	//@@author A0147986H
 	@Test
 	public void execute_selectInvalidArgsFormat_errorMessageShown() throws Exception {
 		String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, SelectCommand.MESSAGE_USAGE);
@@ -693,12 +694,14 @@ public class LogicManagerTest {
 		ListOfTask expectedAB = helper.generateListOfTask(threeTasks);
 		helper.addToModel(model, threeTasks);
 
-		assertCommandBehavior("select 2", String.format(SelectCommand.MESSAGE_SELECT_PERSON_SUCCESS, 2), expectedAB,
+		assertCommandBehavior("select 2", String.format(SelectCommand.MESSAGE_SELECT_TASK_SUCCESS, 2), expectedAB,
 				expectedAB.getTaskList());
 		assertEquals(1, targetedJumpIndex);
 		assertEquals(model.getFilteredTaskList().get(1), threeTasks.get(1));
 	}
 
+	//@@author A0147986H
+	
 	@Test
 	public void execute_deleteInvalidArgsFormat_errorMessageShown() throws Exception {
 		String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteCommand.MESSAGE_USAGE);
@@ -711,16 +714,52 @@ public class LogicManagerTest {
 	}
 
 	@Test
-	public void execute_delete_removesCorrectPerson() throws Exception {
+	public void execute_delete_removesCorrectTask() throws Exception {
 		TestDataHelper helper = new TestDataHelper();
 		List<Task> threeTasks = helper.generateTaskList(3);
 
 		ListOfTask expectedAB = helper.generateListOfTask(threeTasks);
 		expectedAB.removeTask(threeTasks.get(1));
+		ArrayList<ReadOnlyTask> deletedTasks=new ArrayList<ReadOnlyTask>();
+		deletedTasks.add(threeTasks.get(1));
 		helper.addToModel(model, threeTasks);
 
-		assertCommandBehavior("delete 2", String.format(DeleteCommand.MESSAGE_DELETE_TASK_SUCCESS, threeTasks.get(1)),
+		assertCommandBehavior("delete 2", String.format(DeleteCommand.MESSAGE_DELETE_TASK_SUCCESS, StringUtil.getTaskDetails(deletedTasks)),
 				expectedAB, expectedAB.getTaskList());
+	}
+	
+	@Test
+	public void execute_delete_removesMultipleTasks() throws Exception{
+		TestDataHelper helper=new TestDataHelper();
+		List<Task> threeTasks=helper.generateTaskList(3);
+		ArrayList<ReadOnlyTask> deletedTasks=new ArrayList<ReadOnlyTask>();
+		
+		ListOfTask expectedAB=helper.generateListOfTask(threeTasks);
+		expectedAB.removeTask(threeTasks.get(0));
+		expectedAB.removeTask(threeTasks.get(1));
+		deletedTasks.add(threeTasks.get(0));
+		deletedTasks.add(threeTasks.get(1));
+		helper.addToModel(model, threeTasks);
+		
+		assertCommandBehavior("delete 1 2 ",String.format(DeleteCommand.MESSAGE_DELETE_TASK_SUCCESS, StringUtil.getTaskDetails(deletedTasks)),
+				expectedAB,expectedAB.getTaskList());
+	}
+	
+	@Test
+	public void execute_delete_removesMultipleTasksWithDash() throws Exception{
+		TestDataHelper helper=new TestDataHelper();
+		List<Task> threeTasks=helper.generateTaskList(3);
+		ArrayList<ReadOnlyTask> deletedTasks=new ArrayList<ReadOnlyTask>();
+		
+		ListOfTask expectedAB=helper.generateListOfTask(threeTasks);
+		expectedAB.removeTask(threeTasks.get(0));
+		expectedAB.removeTask(threeTasks.get(1));
+		deletedTasks.add(threeTasks.get(0));
+		deletedTasks.add(threeTasks.get(1));
+		helper.addToModel(model, threeTasks);
+		
+		assertCommandBehavior("delete 1-2 ",String.format(DeleteCommand.MESSAGE_DELETE_TASK_SUCCESS, StringUtil.getTaskDetails(deletedTasks)),
+				expectedAB,expectedAB.getTaskList());
 	}
 
 	// @@author A0139714B

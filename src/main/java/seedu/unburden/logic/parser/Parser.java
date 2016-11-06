@@ -383,8 +383,20 @@ public class Parser {
 
 
 			ArrayList<Integer> indexesInt_phase = new ArrayList<> ();
+			
+			Optional<Integer> index_list = parseIndex(SeperateIndexes_phase[0]);
+
+			if (!index_list.isPresent()) {
+				return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteCommand.MESSAGE_USAGE));
+			}
 
 			int low_bond = Integer.parseInt(SeperateIndexes_phase[0]);
+			
+			Optional<Integer> index_list2 = parseIndex(SeperateIndexes_phase[1]);
+
+			if (!index_list2.isPresent()) {
+				return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteCommand.MESSAGE_USAGE));
+			}
 			int high_bond =	Integer.parseInt(SeperateIndexes_phase[1]);
 
 
@@ -392,13 +404,8 @@ public class Parser {
 
 				indexesInt_phase.add(i);
 
-				Optional<Integer> index_phase = Optional.of(i);
-
 				System.out.print(SeperateIndexes_phase[0] + SeperateIndexes_phase[1]);	
 
-				if (!index_phase.isPresent()) {
-					return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteCommand.MESSAGE_USAGE));
-				}
 			}
 
 			Collections.sort(indexesInt_phase);
@@ -417,14 +424,13 @@ public class Parser {
 			ArrayList<Integer> indexesInt_list = new ArrayList<> (); 
 
 			for(int i=0; i<(SeperateIndexes_list.length); i++){
-
-				indexesInt_list.add(Integer.parseInt(SeperateIndexes_list[i]));
-
-				Optional<Integer> index_list = Optional.of(Integer.parseInt(SeperateIndexes_list[i]));
+				
+				Optional<Integer> index_list = parseIndex(SeperateIndexes_list[i]);
 
 				if (!index_list.isPresent()) {
 					return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteCommand.MESSAGE_USAGE));
 				}
+				indexesInt_list.add(Integer.parseInt(SeperateIndexes_list[i]));
 			}	
 			
 			Collections.sort(indexesInt_list);

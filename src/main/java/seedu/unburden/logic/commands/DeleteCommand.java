@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import seedu.unburden.commons.core.Messages;
 import seedu.unburden.commons.core.UnmodifiableObservableList;
 import seedu.unburden.commons.exceptions.IllegalValueException;
+import seedu.unburden.commons.util.StringUtil;
 import seedu.unburden.model.tag.UniqueTagList.DuplicateTagException;
 import seedu.unburden.model.task.ReadOnlyTask;
 import seedu.unburden.model.task.UniqueTaskList.TaskNotFoundException;
@@ -23,7 +24,7 @@ public class DeleteCommand extends Command {
 			+ "Parameters: INDEX (must be a positive integer)\n"
 			+ "Example: " + COMMAND_WORD + " 2 ";
 
-	public static final String MESSAGE_DELETE_TASK_SUCCESS = "Deleted Task: %1$s";
+	public static final String MESSAGE_DELETE_TASK_SUCCESS = "Deleted Task:\n%1$s";
 
 	public final ArrayList<Integer> targetIndexes;
 
@@ -35,25 +36,30 @@ public class DeleteCommand extends Command {
 	public CommandResult execute() throws DuplicateTagException, IllegalValueException {
 
 		UnmodifiableObservableList<ReadOnlyTask> lastShownList = model.getFilteredTaskList();
+		ArrayList<ReadOnlyTask> deletedTaskList=new ArrayList<ReadOnlyTask>();
 
 		if (lastShownList.size() < targetIndexes.get(targetIndexes.size()-1)) {
 			indicateAttemptToExecuteIncorrectCommand();
 			return new CommandResult(Messages.MESSAGE_INVALID_TASK_DISPLAYED_INDEX);
 		}
 
+		model.saveToPrevLists();
+		
 		for(int i = 0; i < targetIndexes.size(); i++){
 
 			ReadOnlyTask taskToDelete = lastShownList.get(targetIndexes.get(i) - i - 1);
+			deletedTaskList.add(taskToDelete);
 
 			try {
-				model.saveToPrevLists();
 				model.deleteTask(taskToDelete);
 			} catch (TaskNotFoundException pnfe) {
 				assert false : "The target task cannot be missing";
 			}
 		}
-		return new CommandResult(String.format(MESSAGE_DELETE_TASK_SUCCESS, targetIndexes));         
-	}          
+		return new CommandResult(String.format(MESSAGE_DELETE_TASK_SUCCESS, StringUtil.getTaskDetails(deletedTaskList)));         
+	}    
+	
+	
 }
 
 
