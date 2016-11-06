@@ -75,6 +75,11 @@ public class Parser {
 
 	private static final Pattern SET_DIR_FORMAT_RESET = Pattern.compile(SetDirectoryCommand.COMMAND_RESET);
 
+	//@@author A0147986H
+		private static final Pattern INDEX_PHASE_FORMAT = Pattern.compile("(?<targetIndex>\\d+-\\d+)");
+		
+		private static final Pattern INDEX_LIST_FORMAT = Pattern.compile("(?<targetIndex>\\d+(\\s+\\d+)*)");
+		
 	//@@author A0139678J
 	private static final String BYTODAY = "by today";
 
@@ -396,6 +401,8 @@ public class Parser {
 				}
 			}
 
+			Collections.sort(indexesInt_phase);
+			
 			return new DeleteCommand(indexesInt_phase);
 
 		}
@@ -418,7 +425,10 @@ public class Parser {
 				if (!index_list.isPresent()) {
 					return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteCommand.MESSAGE_USAGE));
 				}
-			}		
+			}	
+			
+			Collections.sort(indexesInt_list);
+			
 			return new DeleteCommand(indexesInt_list); 
 		}
 
@@ -426,13 +436,6 @@ public class Parser {
 
 			return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteCommand.MESSAGE_USAGE));	
 
-		/*
-		Optional<Integer> index = parseIndex(args);
-		if (!index.isPresent()) {
-			return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteCommand.MESSAGE_USAGE));
-		}
-
-		return new DeleteCommand(index.get());*/
 	}
 
 	/**
@@ -444,12 +447,12 @@ public class Parser {
 	 */
 	private Command prepareSelect(String args) {
 
-		Optional<Integer> index = parseIndex(args);
-		if (!index.isPresent()) {
+		Optional<Integer> index_select = parseIndex(args);
+		if (!index_select.isPresent()) {
 			return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, SelectCommand.MESSAGE_USAGE));
 		}
 
-		return new SelectCommand(index.get());
+		return new SelectCommand(index_select.get());
 	}
 
 	
