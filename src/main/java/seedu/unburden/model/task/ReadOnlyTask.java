@@ -65,6 +65,7 @@ public interface ReadOnlyTask {
 			}
 		}
 
+		//@@author A0147986H
 		// Floating task with task description
 		else if (getTaskDescription().getFullTaskDescription() != "" && getDate().getFullDate() == ""
 				&& getStartTime().getFullTime() == "" && getEndTime().getFullTime() == "") {

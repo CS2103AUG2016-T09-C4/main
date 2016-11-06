@@ -356,13 +356,14 @@ public class Parser {
 		return new HashSet<>(tagStrings);
 	}
 
+	
+	 //@@author A0147986H 
 	/**
 	 * Parses arguments in the context of the delete person command.
 	 *
 	 * @param args
 	 *            full command args string
 	 * @return the prepared command
-	 * @@author A0147986H 
 	 */
 	private Command prepareDelete(String args) throws ParseException {
 
@@ -381,26 +382,28 @@ public class Parser {
 
 			String[] SeperateIndexes_phase = indexes_phase.trim().split("-");
 
+			ArrayList<Integer> sortList = new ArrayList<> ();
 
 			ArrayList<Integer> indexesInt_phase = new ArrayList<> ();
-			
+
 			Optional<Integer> index_list = parseIndex(SeperateIndexes_phase[0]);
 
 			if (!index_list.isPresent()) {
 				return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteCommand.MESSAGE_USAGE));
-			}
+			}			
 
-			int low_bond = Integer.parseInt(SeperateIndexes_phase[0]);
-			
 			Optional<Integer> index_list2 = parseIndex(SeperateIndexes_phase[1]);
 
 			if (!index_list2.isPresent()) {
 				return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteCommand.MESSAGE_USAGE));
 			}
-			int high_bond =	Integer.parseInt(SeperateIndexes_phase[1]);
 
+			sortList.add(Integer.parseInt(SeperateIndexes_phase[0]));
+			sortList.add(Integer.parseInt(SeperateIndexes_phase[1]));
 
-			for(int i= low_bond; i<=high_bond; i++){     
+			Collections.sort(sortList);
+
+			for(int i= sortList.get(0); i<=sortList.get(1); i++){     
 
 				indexesInt_phase.add(i);
 
@@ -409,7 +412,7 @@ public class Parser {
 			}
 
 			Collections.sort(indexesInt_phase);
-			
+
 			return new DeleteCommand(indexesInt_phase);
 
 		}
@@ -424,7 +427,7 @@ public class Parser {
 			ArrayList<Integer> indexesInt_list = new ArrayList<> (); 
 
 			for(int i=0; i<(SeperateIndexes_list.length); i++){
-				
+
 				Optional<Integer> index_list = parseIndex(SeperateIndexes_list[i]);
 
 				if (!index_list.isPresent()) {
@@ -432,9 +435,9 @@ public class Parser {
 				}
 				indexesInt_list.add(Integer.parseInt(SeperateIndexes_list[i]));
 			}	
-			
+
 			Collections.sort(indexesInt_list);
-			
+
 			return new DeleteCommand(indexesInt_list); 
 		}
 

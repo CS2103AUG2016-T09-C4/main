@@ -9,20 +9,22 @@ import seedu.unburden.model.tag.UniqueTagList.DuplicateTagException;
 import seedu.unburden.model.task.ReadOnlyTask;
 import seedu.unburden.model.task.UniqueTaskList.TaskNotFoundException;
 
-
+//@@Author A0147986H
 /**
  * Deletes a task or a set of tasks identified 
  * using it's last displayed index from the address book.
- * Author@@ A0147986H
  */
 public class DeleteCommand extends Command {
 
 	public static final String COMMAND_WORD = "delete";
 
 	public static final String MESSAGE_USAGE = COMMAND_WORD
-			+ ": Deletes the task identified by the index number used in the last task listing.\n"
-			+ "Parameters: INDEX (must be a positive integer)\n"
-			+ "Example: " + COMMAND_WORD + " 2 ";
+			+ ": Deletes the task identified by the index or a range of indexes\n"
+			+ "(must be positive integer)used in the last task listing.\n"
+			+ "Format1: delete index1-index2\n"
+			+ "Example: " + COMMAND_WORD + " 1-3\n"
+			+ "Format2: delete index1 index2 index3 index4 index5\n"
+			+ "Example: " + COMMAND_WORD + " 1 2 3";
 
 	public static final String MESSAGE_DELETE_TASK_SUCCESS = "Deleted Task:\n%1$s";
 
