@@ -157,7 +157,9 @@ public class UniqueTagList implements Iterable<Tag> {
 	public int hashCode() {
 		return internalList.hashCode();
 	}
-	//author A0147986H
+	//@@author A0147986H
+	/**check whether the internalList is empty
+	 */
 	public boolean isEmpty(){
 		return internalList.isEmpty();
 	}
