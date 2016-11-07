@@ -752,6 +752,23 @@ public class LogicManagerTest {
 	}
 	
 	@Test
+	public void execute_delete_removesMultipleTasksWithDuplicate() throws Exception{
+		TestDataHelper helper=new TestDataHelper();
+		List<Task> threeTasks=helper.generateTaskList(3);
+		ArrayList<ReadOnlyTask> deletedTasks=new ArrayList<ReadOnlyTask>();
+		
+		ListOfTask expectedAB=helper.generateListOfTask(threeTasks);
+		expectedAB.removeTask(threeTasks.get(0));
+		expectedAB.removeTask(threeTasks.get(1));
+		deletedTasks.add(threeTasks.get(0));
+		deletedTasks.add(threeTasks.get(1));
+		helper.addToModel(model, threeTasks);
+		
+		assertCommandBehavior("delete 1 2 1",String.format(DeleteCommand.MESSAGE_DELETE_TASK_SUCCESS, StringUtil.getTaskDetails(deletedTasks)),
+				expectedAB,expectedAB.getTaskList());
+	}
+	
+	@Test
 	public void execute_delete_removesMultipleTasksReverse() throws Exception{
 		TestDataHelper helper=new TestDataHelper();
 		List<Task> threeTasks=helper.generateTaskList(3);
@@ -802,6 +819,40 @@ public class LogicManagerTest {
 				expectedAB,expectedAB.getTaskList());
 	}
 
+	@Test
+	public void execute_delete_removesMultipleTasksWithZeroFront() throws Exception{
+		TestDataHelper helper=new TestDataHelper();
+		List<Task> threeTasks=helper.generateTaskList(3);
+		ArrayList<ReadOnlyTask> deletedTasks=new ArrayList<ReadOnlyTask>();
+		
+		ListOfTask expectedAB=helper.generateListOfTask(threeTasks);
+		expectedAB.removeTask(threeTasks.get(0));
+		expectedAB.removeTask(threeTasks.get(1));
+		deletedTasks.add(threeTasks.get(0));
+		deletedTasks.add(threeTasks.get(1));
+		helper.addToModel(model, threeTasks);
+		
+		assertCommandBehavior("delete 02-01 ",String.format(DeleteCommand.MESSAGE_DELETE_TASK_SUCCESS, StringUtil.getTaskDetails(deletedTasks)),
+				expectedAB,expectedAB.getTaskList());
+	}
+		
+	@Test
+	public void execute_delete_removesMultipleTasksZeroFront2() throws Exception{
+		TestDataHelper helper=new TestDataHelper();
+		List<Task> threeTasks=helper.generateTaskList(3);
+		ArrayList<ReadOnlyTask> deletedTasks=new ArrayList<ReadOnlyTask>();
+		
+		ListOfTask expectedAB=helper.generateListOfTask(threeTasks);
+		expectedAB.removeTask(threeTasks.get(0));
+		expectedAB.removeTask(threeTasks.get(1));
+		deletedTasks.add(threeTasks.get(0));
+		deletedTasks.add(threeTasks.get(1));
+		helper.addToModel(model, threeTasks);
+		
+		assertCommandBehavior("delete 02 01 ",String.format(DeleteCommand.MESSAGE_DELETE_TASK_SUCCESS, StringUtil.getTaskDetails(deletedTasks)),
+				expectedAB,expectedAB.getTaskList());
+	}
+	
 	
 	
 	// @@author A0139714B
