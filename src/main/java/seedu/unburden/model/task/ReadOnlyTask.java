@@ -46,9 +46,9 @@ public interface ReadOnlyTask {
 																	// here
 																	// onwards
 	}
-
+	//@@author A0147986H-unused
 	/**
-	 * Formats the person as text, showing all contact details.
+	 * Formats the task as text, showing all contact details.
 	 */
 	default String getAsText() {
 		final StringBuilder builder = new StringBuilder();
@@ -65,7 +65,6 @@ public interface ReadOnlyTask {
 			}
 		}
 
-		//@@author A0147986H
 		// Floating task with task description
 		else if (getTaskDescription().getFullTaskDescription() != "" && getDate().getFullDate() == ""
 				&& getStartTime().getFullTime() == "" && getEndTime().getFullTime() == "") {

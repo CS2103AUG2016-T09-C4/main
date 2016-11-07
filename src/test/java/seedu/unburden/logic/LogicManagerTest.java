@@ -675,7 +675,11 @@ public class LogicManagerTest {
 		}
 	}
 	
-	//@@author A0147986H
+	//@@author A0147986H-unused
+	/**
+	 * test the select command
+	 * 
+	 */
 	@Test
 	public void execute_selectInvalidArgsFormat_errorMessageShown() throws Exception {
 		String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, SelectCommand.MESSAGE_USAGE);
@@ -700,8 +704,13 @@ public class LogicManagerTest {
 		assertEquals(1, targetedJumpIndex);
 		assertEquals(model.getFilteredTaskList().get(1), threeTasks.get(1));
 	}
-
-	//@@author A0147986H	
+	
+	//@@author A0147986H-unused
+	/**test the multiple delete command. 
+	 * test both reverse indexes and any kind 
+	 * if format 
+	 * @throws Exception
+	 */
 	@Test
 	public void execute_deleteInvalidArgsFormat_errorMessageShown() throws Exception {
 		String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteCommand.MESSAGE_USAGE);
@@ -735,6 +744,36 @@ public class LogicManagerTest {
 	}
 	
 	@Test
+	public void execute_delete_removesCorrectTaskWithDuplicate() throws Exception {
+		TestDataHelper helper = new TestDataHelper();
+		List<Task> threeTasks = helper.generateTaskList(3);
+
+		ListOfTask expectedAB = helper.generateListOfTask(threeTasks);
+		expectedAB.removeTask(threeTasks.get(1));
+		ArrayList<ReadOnlyTask> deletedTasks=new ArrayList<ReadOnlyTask>();
+		deletedTasks.add(threeTasks.get(1));
+		helper.addToModel(model, threeTasks);
+
+		assertCommandBehavior("delete 2 2 2 2 2 2", String.format(DeleteCommand.MESSAGE_DELETE_TASK_SUCCESS, StringUtil.getTaskDetails(deletedTasks)),
+				expectedAB, expectedAB.getTaskList());
+	}
+	
+	@Test
+	public void execute_delete_removesCorrectTaskWithDuplicate2() throws Exception {
+		TestDataHelper helper = new TestDataHelper();
+		List<Task> threeTasks = helper.generateTaskList(3);
+
+		ListOfTask expectedAB = helper.generateListOfTask(threeTasks);
+		expectedAB.removeTask(threeTasks.get(1));
+		ArrayList<ReadOnlyTask> deletedTasks=new ArrayList<ReadOnlyTask>();
+		deletedTasks.add(threeTasks.get(1));
+		helper.addToModel(model, threeTasks);
+
+		assertCommandBehavior("delete 2-2", String.format(DeleteCommand.MESSAGE_DELETE_TASK_SUCCESS, StringUtil.getTaskDetails(deletedTasks)),
+				expectedAB, expectedAB.getTaskList());
+	}
+	
+	@Test
 	public void execute_delete_removesMultipleTasks() throws Exception{
 		TestDataHelper helper=new TestDataHelper();
 		List<Task> threeTasks=helper.generateTaskList(3);
@@ -748,6 +787,23 @@ public class LogicManagerTest {
 		helper.addToModel(model, threeTasks);
 		
 		assertCommandBehavior("delete 1 2 ",String.format(DeleteCommand.MESSAGE_DELETE_TASK_SUCCESS, StringUtil.getTaskDetails(deletedTasks)),
+				expectedAB,expectedAB.getTaskList());
+	}
+	
+	@Test
+	public void execute_delete_removesMultipleTasksWithZero() throws Exception{
+		TestDataHelper helper=new TestDataHelper();
+		List<Task> threeTasks=helper.generateTaskList(3);
+		ArrayList<ReadOnlyTask> deletedTasks=new ArrayList<ReadOnlyTask>();
+		
+		ListOfTask expectedAB=helper.generateListOfTask(threeTasks);
+		expectedAB.removeTask(threeTasks.get(0));
+		expectedAB.removeTask(threeTasks.get(1));
+		deletedTasks.add(threeTasks.get(0));
+		deletedTasks.add(threeTasks.get(1));
+		helper.addToModel(model, threeTasks);
+		
+		assertCommandBehavior("delete 01 02 ",String.format(DeleteCommand.MESSAGE_DELETE_TASK_SUCCESS, StringUtil.getTaskDetails(deletedTasks)),
 				expectedAB,expectedAB.getTaskList());
 	}
 	
@@ -786,6 +842,24 @@ public class LogicManagerTest {
 	}
 	
 	@Test
+	public void execute_delete_removesMultipleTasksReverseWithZero() throws Exception{
+		TestDataHelper helper=new TestDataHelper();
+		List<Task> threeTasks=helper.generateTaskList(3);
+		ArrayList<ReadOnlyTask> deletedTasks=new ArrayList<ReadOnlyTask>();
+		
+		ListOfTask expectedAB=helper.generateListOfTask(threeTasks);
+		expectedAB.removeTask(threeTasks.get(0));
+		expectedAB.removeTask(threeTasks.get(1));
+		deletedTasks.add(threeTasks.get(0));
+		deletedTasks.add(threeTasks.get(1));
+		helper.addToModel(model, threeTasks);
+		
+		assertCommandBehavior("delete 02 01 ",String.format(DeleteCommand.MESSAGE_DELETE_TASK_SUCCESS, StringUtil.getTaskDetails(deletedTasks)),
+				expectedAB,expectedAB.getTaskList());
+	}
+	
+	
+	@Test
 	public void execute_delete_removesMultipleTasksWithDash() throws Exception{
 		TestDataHelper helper=new TestDataHelper();
 		List<Task> threeTasks=helper.generateTaskList(3);
@@ -820,7 +894,7 @@ public class LogicManagerTest {
 	}
 
 	@Test
-	public void execute_delete_removesMultipleTasksWithZeroFront() throws Exception{
+	public void execute_delete_removesMultipleTasksWithDashReverseWithZero() throws Exception{
 		TestDataHelper helper=new TestDataHelper();
 		List<Task> threeTasks=helper.generateTaskList(3);
 		ArrayList<ReadOnlyTask> deletedTasks=new ArrayList<ReadOnlyTask>();
@@ -835,25 +909,7 @@ public class LogicManagerTest {
 		assertCommandBehavior("delete 02-01 ",String.format(DeleteCommand.MESSAGE_DELETE_TASK_SUCCESS, StringUtil.getTaskDetails(deletedTasks)),
 				expectedAB,expectedAB.getTaskList());
 	}
-		
-	@Test
-	public void execute_delete_removesMultipleTasksZeroFront2() throws Exception{
-		TestDataHelper helper=new TestDataHelper();
-		List<Task> threeTasks=helper.generateTaskList(3);
-		ArrayList<ReadOnlyTask> deletedTasks=new ArrayList<ReadOnlyTask>();
-		
-		ListOfTask expectedAB=helper.generateListOfTask(threeTasks);
-		expectedAB.removeTask(threeTasks.get(0));
-		expectedAB.removeTask(threeTasks.get(1));
-		deletedTasks.add(threeTasks.get(0));
-		deletedTasks.add(threeTasks.get(1));
-		helper.addToModel(model, threeTasks);
-		
-		assertCommandBehavior("delete 02 01 ",String.format(DeleteCommand.MESSAGE_DELETE_TASK_SUCCESS, StringUtil.getTaskDetails(deletedTasks)),
-				expectedAB,expectedAB.getTaskList());
-	}
-	
-	
+			
 	
 	// @@author A0139714B
 	@Test

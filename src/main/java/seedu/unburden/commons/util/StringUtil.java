@@ -11,8 +11,7 @@ import seedu.unburden.model.tag.Tag;
 import seedu.unburden.model.tag.UniqueTagList;
 import seedu.unburden.model.task.ReadOnlyTask;
 
-//@@author A0147986H
-
+//@@author A0147986H-unused
 /**
  * Helper functions for handling strings.
  * 
@@ -41,14 +40,14 @@ public class StringUtil {
 
     /**
      * Returns true if s represents an unsigned integer e.g. 1, 2, 3, ... <br>
-     *   Will return false for null, empty string, "-1", "0", "+1", and " 2 " (untrimmed) "3 0" (contains whitespace).
+     * Will return false for null, empty string, "-1", "0", "+1", and " 2 " 
+     * (untrimmed) "3 0" (contains whitespace).
      * @param s Should be trimmed.
      */
     public static boolean isUnsignedInteger(String s){
         return s != null && s.matches("^0*[1-9]\\d*$");
     }
     
-    //@@author A0147986H
     public static String getTaskDetails(ArrayList<ReadOnlyTask> taskList){
     	StringBuilder resultedList=new StringBuilder();
     	for(ReadOnlyTask p:taskList){

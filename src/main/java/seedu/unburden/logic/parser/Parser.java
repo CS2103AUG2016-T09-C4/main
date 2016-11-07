@@ -77,7 +77,7 @@ public class Parser {
 
 	private static final Pattern SET_DIR_FORMAT_RESET = Pattern.compile(SetDirectoryCommand.COMMAND_RESET);
 
-	//@@author A0147986H
+	//@@author A0147986H-unused
 		private static final Pattern INDEX_PHASE_FORMAT = Pattern.compile("(?<targetIndex>\\d+-\\d+)");
 		
 		private static final Pattern INDEX_LIST_FORMAT = Pattern.compile("(?<targetIndex>\\d+(\\s+\\d+)*)");
@@ -359,7 +359,7 @@ public class Parser {
 	}
 
 	
-	 //@@author A0147986H 
+	 //@@author A0147986H-unused
 	/**
 	 * Parses arguments in the context of the delete person command.
 	 *

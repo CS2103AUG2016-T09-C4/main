@@ -5,11 +5,11 @@ import seedu.unburden.commons.core.UnmodifiableObservableList;
 import seedu.unburden.commons.events.ui.JumpToListRequestEvent;
 import seedu.unburden.model.task.ReadOnlyTask;
 
+//@@author A0147986H-unused
 /**
  * Selects a task identified using it's last displayed index from the address book.
  * It will also show the details of the task selected, especially
  * task descriptions that may not be able to show on the taskList panel
- * @@author A0147986H
  */
 public class SelectCommand extends Command {
 
