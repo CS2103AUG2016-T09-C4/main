@@ -7,6 +7,8 @@ import static seedu.unburden.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
+
 import seedu.unburden.commons.core.Config;
 import seedu.unburden.commons.exceptions.IllegalValueException;
 import seedu.unburden.commons.util.StringUtil;
@@ -423,9 +425,9 @@ public class Parser {
 			String indexes_list = matcherList.group("targetIndex");     
 
 			String[] SeperateIndexes_list = indexes_list.split(" ");
-
+			
 			ArrayList<Integer> indexesInt_list = new ArrayList<> (); 
-
+									        
 			for(int i=0; i<(SeperateIndexes_list.length); i++){
 
 				Optional<Integer> index_list = parseIndex(SeperateIndexes_list[i]);
@@ -435,6 +437,8 @@ public class Parser {
 				}
 				indexesInt_list.add(Integer.parseInt(SeperateIndexes_list[i]));
 			}	
+			
+			indexesInt_list = (ArrayList<Integer>) indexesInt_list.stream().distinct().collect(Collectors.toList());
 
 			Collections.sort(indexesInt_list);
 
